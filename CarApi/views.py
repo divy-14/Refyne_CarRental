@@ -257,7 +257,19 @@ class UserBookedCars(APIView):
 
 
 class CarsAvailable(APIView):
-    def get(self, request, format=None):
+    '''
+    searches for car in a given time interval
+    '''
+
+    schema = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'fromDate': openapi.Schema(type=openapi.TYPE_STRING, description='Start Jouney Date and Time, format-> %Y-%m-%d %H:%M:%S'),
+            'toDate': openapi.Schema(type=openapi.TYPE_STRING, description='End Date for your Journey, format-> %Y-%m-%d %H:%M:%S'),
+        })
+
+    @swagger_auto_schema(request_body=schema)
+    def post(self, request, format=None):
         to_ = request.data["toDate"]
         from_ = request.data["fromDate"]
 
