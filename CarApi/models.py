@@ -15,7 +15,7 @@ class NewUser(models.Model):
     userMobile (unique) -> mobile number for the user,
     '''
     userName = models.CharField(max_length=50)
-    userMobile = models.IntegerField(unique=True)
+    userMobile = models.IntegerField(unique=True, primary_key=True)
 
     def __str__(self):
         return str(self.userMobile)
@@ -31,7 +31,8 @@ class Car(models.Model):
     pph -> price per hour ,
     security_deposit -> security deposit for the car
     '''
-    carLicenseNumber = models.CharField(max_length=30, unique=True)
+    carLicenseNumber = models.CharField(
+        max_length=30, unique=True, primary_key=True)
     Manufacturer = models.CharField(max_length=40)
     Model = models.CharField(max_length=40)
     base_price = models.IntegerField()
