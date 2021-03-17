@@ -202,6 +202,16 @@ class Bookers(APIView):
         return HttpResponse(json_data, content_type="application/json")
 
 
+class UserBookedCars(APIView):
+    def get(self, request, pk=None, format=None):
+        userId = pk
+        booked_cars = BookedCars.objects.filter(userid=userId)
+        serializer = BookCarSerializer(booked_cars, many=True)
+
+        json_data = JSONRenderer().render(serializer.data)
+        return HttpResponse(json_data, content_type="application/json")
+
+
 '''
 3 cases:
 car booked for [(27, 29)], car booking request for examples:
