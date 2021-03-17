@@ -9,20 +9,37 @@ from datetime import datetime
 from dateutil import parser
 from rest_framework.renderers import JSONRenderer
 from collections import defaultdict
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 class CarApi(APIView):
-    '''
-    send info of cars over api
-    '''
 
     def get(self, request, format=None):
+        '''
+        get info of all the cars in the database
+        '''
         cars = Car.objects.all()
         # important to put many=True
         serializer = CarSerializer(cars, many=True)
         return Response(serializer.data)
 
+    schema = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'carLicenseNumber': openapi.Schema(type=openapi.TYPE_STRING, description='The license Plate number for the car'),
+            'Manufacturer': openapi.Schema(type=openapi.TYPE_STRING, description='The Manufacturer of the Car'),
+            'Model': openapi.Schema(type=openapi.TYPE_STRING, description='The city to which the car belongs to'),
+            'base_price': openapi.Schema(type=openapi.TYPE_INTEGER, description='The base price of the Car'),
+            'pph': openapi.Schema(type=openapi.TYPE_INTEGER, description='The price per hour of the Car for rental'),
+            'security_deposit': openapi.Schema(type=openapi.TYPE_INTEGER, description='The security deposit for the Car'),
+        })
+
+    @swagger_auto_schema(request_body=schema)
     def post(self, request, format=None):
+        '''
+        post details about a new car
+        '''
         serializer = CarSerializer(data=request.data)
         permission_classes = [permissions.AllowAny]
 
@@ -40,17 +57,20 @@ class CarApi(APIView):
 
 
 class UserApi(APIView):
-    '''
-    send info of user over api
-    '''
 
     def get(self, request, format=None):
+        '''
+        get info about a particular user
+        '''
         users = NewUser.objects.all()
         # important to put many=True
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        '''
+        post info about a new user
+        '''
         serializer = UserSerializer(data=request.data)
         permission_classes = [permissions.AllowAny]
 
@@ -73,7 +93,6 @@ class CalculateCost(APIView):
     '''
 
     def post(self, request, format=None):
-        print(request.data)
         try:
             to_ = request.data["toDateTime"]
             from_ = request.data["fromDateTime"]
@@ -194,13 +213,22 @@ class BookCar(APIView):
 
 class Bookers(APIView):
 
+    '''
+    get list of users who have booked a given car
+    '''
+
     def get(self, request, pk=None, format=None):
         carId = str(pk)
-        booked_cars = BookedCars.objects.filter(carLicenseNumber=carId)
-        serializer = BookCarSerializer(booked_cars, many=True)
+        try:
+            booked_cars = BookedCars.objects.filter(carLicenseNumber=carId)
+            if not booked_cars:
+                return Response(status=status.HTTP_404_NOT_FOUND)
 
-        json_data = JSONRenderer().render(serializer.data)
-        return HttpResponse(json_data, content_type="application/json")
+            serializer = BookCarSerializer(booked_cars, many=True)
+            json_data = JSONRenderer().render(serializer.data)
+            return HttpResponse(json_data, content_type="application/json")
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class UserBookedCars(APIView):
