@@ -248,8 +248,17 @@ class Bookers(APIView):
         carId = str(pk)
         try:
             booked_cars = BookedCars.objects.filter(carLicenseNumber=carId)
+            cars = Car.objects.filter(carLicenseNumber=carId)
+
+            if len(cars) == 0:
+                return Response(
+                    {'Car not Found': carId},
+                    status=status.HTTP_404_NOT_FOUND)
+
             if not booked_cars:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+                return Response(
+                    {'No Booking Records': carId},
+                    status=status.HTTP_404_NOT_FOUND)
 
             serializer = BookCarSerializer(booked_cars, many=True)
             json_data = JSONRenderer().render(serializer.data)
