@@ -1,8 +1,8 @@
 1. with or without slash?
-2. change to_ and from_ to dates rather than integers
+2̶.̶ c̶h̶a̶n̶g̶e̶ t̶o̶_̶ a̶n̶d̶ f̶r̶o̶m̶_̶ t̶o̶ d̶a̶t̶e̶s̶ r̶a̶t̶h̶e̶r̶ t̶h̶a̶n̶ i̶n̶t̶e̶g̶e̶r̶s̶ -̶>̶ D̶O̶N̶E̶
 3. need to implement endpoint to get info about particular car and user
 4. write checks for NumberPlate format, phone number etc.
 5. delete entries from table after the end date is greater than current day
 6. return JSON response rather than {}
 7. what happens if the time slots are missing in between
-8.
+8. ?
