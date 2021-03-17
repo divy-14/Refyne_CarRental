@@ -47,3 +47,9 @@ class Car(models.Model):
 
     def __str__(self):
         return self.carLicenseNumber
+
+
+class BookedCars(models.Model):
+    userid = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    toDate = models.DateTimeField()
+    fromDate = models.DateTimeField()
