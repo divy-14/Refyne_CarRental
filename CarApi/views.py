@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from datetime import datetime
 from dateutil import parser
 from rest_framework.renderers import JSONRenderer
+from collections import defaultdict
 
 
 class CarApi(APIView):
@@ -210,6 +211,72 @@ class UserBookedCars(APIView):
 
         json_data = JSONRenderer().render(serializer.data)
         return HttpResponse(json_data, content_type="application/json")
+
+
+class CarsAvailable(APIView):
+    def get(self, request, format=None):
+        to_ = request.data["toDate"]
+        from_ = request.data["fromDate"]
+
+        # converting to and from to datetime objects
+        to_ = datetime.strptime(to_, '%Y-%m-%d %H:%M:%S')
+        from_ = datetime.strptime(from_, '%Y-%m-%d %H:%M:%S')
+
+        # if from_ is greater than to_ date return as this is not possible
+        if to_ < from_:
+            return Response(
+                {'Not possible end date has to be greater than start date'},
+                status=status.HTTP_403_FORBIDDEN)
+
+        # getting list of booked car and all the cars available
+        booked_cars = BookedCars.objects.all()
+        cars = Car.objects.all()
+
+        # we will use a dictionary to keep track of all the cars
+        cars_schedule = {}
+
+        # adding all the cars in our arsenal to the car_schedule list
+        for car in cars:
+            if str(car.carLicenseNumber) not in cars_schedule:
+                cars_schedule[car.carLicenseNumber] = []
+
+        # now each car will have a list of its booking schedule
+        for car in booked_cars:
+            fromDate = car.fromDate.replace(tzinfo=None)
+            toDate = car.toDate.replace(tzinfo=None)
+            cars_schedule[str(car.carLicenseNumber)].append((fromDate, toDate))
+
+        # this list will keep track of available cars
+        available_cars = []
+
+        for car in cars_schedule:
+
+            # Now if a car has no booking its car_schedule list will be
+            # empty and any user can book it
+            if len(cars_schedule[car]) == 0:
+                available_cars.append(car)
+                continue
+
+            # else we take a note of each cars schedule sort it
+            # and then check if the car is available for the reqd duration
+            cars_schedule[car].sort
+            is_available = True  # we assume car is available
+            for time in cars_schedule[car]:
+                if from_ < time[1] and from_ >= time[0]:
+                    is_available = False
+                    break
+                if from_ <= time[0] and to_ >= time[1]:
+                    is_available = False
+                    break
+                if to_ > time[0] and to_ <= time[1]:
+                    is_available = False
+                    break
+            if is_available == True:
+                available_cars.append(car)
+
+        return Response(
+            {'Cars Avaiable for given duration': available_cars}
+        )
 
 
 '''
