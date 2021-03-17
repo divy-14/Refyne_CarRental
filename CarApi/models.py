@@ -53,3 +53,5 @@ class BookedCars(models.Model):
     userid = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     toDate = models.DateTimeField()
     fromDate = models.DateTimeField()
+    carLicenseNumber = models.ForeignKey(
+        Car, on_delete=models.CASCADE)
