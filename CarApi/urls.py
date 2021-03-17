@@ -7,5 +7,8 @@ urlpatterns = [
     path('calculate-price/', views.CalculateCost.as_view(), name="price"),
     path('car/book/', views.BookCar.as_view(), name="book-car"),
     path('car/bookings/<pk>', views.Bookers.as_view(), name="car-bookers"),
+    path('user/bookings/<int:pk>',
+         views.UserBookedCars.as_view(), name="user-booked-cars"),
+
 ]
 # car/book
