@@ -15,7 +15,6 @@ class NewUser(models.Model):
     userMobile (unique) -> mobile number for the user,
     '''
     userName = models.CharField(max_length=50)
-    # userId = models.IntegerField()
     userMobile = models.IntegerField(unique=True)
 
     def __str__(self):
@@ -38,12 +37,6 @@ class Car(models.Model):
     base_price = models.IntegerField()
     pph = models.IntegerField()
     security_deposit = models.IntegerField()
-
-    # booked = models.BooleanField(default=False)
-    # userMobile = models.ForeignKey(
-    #     NewUser, blank=True, null=True, on_delete=models.SET_NULL)
-
-    userMobile = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.carLicenseNumber
