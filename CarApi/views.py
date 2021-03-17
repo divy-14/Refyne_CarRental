@@ -8,6 +8,9 @@ from rest_framework.response import Response
 
 
 class CarApi(APIView):
+    '''
+    send info of cars over api
+    '''
 
     def get(self, request, format=None):
         cars = Car.objects.all()
@@ -33,6 +36,10 @@ class CarApi(APIView):
 
 
 class UserApi(APIView):
+    '''
+    send info of user over api
+    '''
+
     def get(self, request, format=None):
         users = NewUser.objects.all()
         # important to put many=True
@@ -57,6 +64,9 @@ class UserApi(APIView):
 
 
 class CalculateCost(APIView):
+    '''
+    calculate the cost of rent of a car given its time duration
+    '''
 
     def post(self, request, format=None):
         print(request.data)
