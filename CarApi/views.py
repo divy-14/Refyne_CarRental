@@ -111,7 +111,7 @@ class CalculateCost(APIView):
             to_ = datetime.strptime(to_, '%Y-%m-%d %H:%M:%S')
             from_ = datetime.strptime(from_, '%Y-%m-%d %H:%M:%S')
 
-            if to_ < from_:
+            if to_ <= from_:
                 return Response(
                     {'Not possible end date has to be greater than start date'},
                     status=status.HTTP_403_FORBIDDEN)
@@ -142,6 +142,16 @@ class BookCar(APIView):
     Book a car for a given duration
     '''
 
+    schema = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'userid': openapi.Schema(type=openapi.TYPE_INTEGER, description='Mobile Number for the user'),
+            'carLicenseNumber': openapi.Schema(type=openapi.TYPE_STRING, description='The license number for the car'),
+            'fromDate': openapi.Schema(type=openapi.TYPE_STRING, description='Start Jouney Date and Time, format-> %Y-%m-%d %H:%M:%S'),
+            'toDate': openapi.Schema(type=openapi.TYPE_STRING, description='End Date for your Journey, format-> %Y-%m-%d %H:%M:%S'),
+        })
+
+    @swagger_auto_schema(request_body=schema)
     def post(self, request, format=None):
         booked_cars = BookedCars.objects.all()
         cars = Car.objects.all()
@@ -154,7 +164,7 @@ class BookCar(APIView):
         to_ = datetime.strptime(to_, '%Y-%m-%d %H:%M:%S')
         from_ = datetime.strptime(from_, '%Y-%m-%d %H:%M:%S')
 
-        if to_ < from_:
+        if to_ <= from_:
             return Response(
                 {'Not possible end date has to be greater than start date'},
                 status=status.HTTP_403_FORBIDDEN)
@@ -167,7 +177,7 @@ class BookCar(APIView):
 
         if FoundUser == False:
             return Response(
-                {'User with given mobile number/id not Found'},
+                {'User with given mobile number/id not Found': mobileNum},
                 status=status.HTTP_404_NOT_FOUND)
 
         # car with the given numberplate not in the car database
@@ -179,7 +189,7 @@ class BookCar(APIView):
 
         if FoundPlate == False:
             return Response(
-                {'Car with given number plate not Found'},
+                {'Car with given number plate not Found': carNumber},
                 status=status.HTTP_404_NOT_FOUND)
 
         # different conditions
@@ -310,7 +320,7 @@ class CarsAvailable(APIView):
         from_ = datetime.strptime(from_, '%Y-%m-%d %H:%M:%S')
 
         # if from_ is greater than to_ date return as this is not possible
-        if to_ < from_:
+        if to_ <= from_:
             return Response(
                 {'Not possible end date has to be greater than start date'},
                 status=status.HTTP_403_FORBIDDEN)
