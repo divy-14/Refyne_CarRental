@@ -6,6 +6,6 @@ urlpatterns = [
     path('cars/', views.CarApi.as_view(), name="add-car"),
     path('calculate-price/', views.CalculateCost.as_view(), name="price"),
     path('car/book/', views.BookCar.as_view(), name="book-car"),
-
+    path('car/bookings/<pk>', views.Bookers.as_view(), name="car-bookers"),
 ]
 # car/book
