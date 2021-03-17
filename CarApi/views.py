@@ -95,17 +95,40 @@ class CalculateCost(APIView):
     '''
     calculate the cost of rent of a car given its time duration
     '''
+    schema = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'carLicenseNumber': openapi.Schema(type=openapi.TYPE_STRING, description='The license number for the car'),
+            'fromDate': openapi.Schema(type=openapi.TYPE_STRING, description='Start Jouney Date and Time, format-> %Y-%m-%d %H:%M:%S'),
+            'toDate': openapi.Schema(type=openapi.TYPE_STRING, description='End Date for your Journey, format-> %Y-%m-%d %H:%M:%S'),
+        })
 
+    @swagger_auto_schema(request_body=schema)
     def post(self, request, format=None):
         try:
-            to_ = request.data["toDateTime"]
-            from_ = request.data["fromDateTime"]
-            time_used = int(to_) - int(from_)
-            # print(to_, from_)
-            post = Car.objects.get(
+            to_ = request.data["toDate"]
+            from_ = request.data["fromDate"]
+            to_ = datetime.strptime(to_, '%Y-%m-%d %H:%M:%S')
+            from_ = datetime.strptime(from_, '%Y-%m-%d %H:%M:%S')
+
+            if to_ < from_:
+                return Response(
+                    {'Not possible end date has to be greater than start date'},
+                    status=status.HTTP_403_FORBIDDEN)
+
+            # time used is in seconds
+            time_used = to_ - from_
+
+            car = Car.objects.get(
                 carLicenseNumber=request.data["carLicenseNumber"])
+            hours_used = time_used//3600
+            ans = car.pph*hours_used
             return Response(
-                {'Price per Hour': post.pph, 'Total price': post.pph*time_used},
+                {
+                    'Price per Hour': car.pph,
+                    'Total Hours': hours_used,
+                    'Total price': ans
+                },
                 status=status.HTTP_200_OK)
 
         except:
