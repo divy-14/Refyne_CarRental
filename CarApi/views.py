@@ -51,9 +51,7 @@ class CarApi(APIView):
                     status=status.HTTP_201_CREATED,
                 )
         except:
-            return Response(
-                {'Bad Request try again, the car with same number plate may already exist'},
-                status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class UserApi(APIView):
@@ -67,6 +65,14 @@ class UserApi(APIView):
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
+    schema = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            'userName': openapi.Schema(type=openapi.TYPE_STRING, description='The name of the user'),
+            'userMobile': openapi.Schema(type=openapi.TYPE_INTEGER, description='The phone number of the user'),
+        })
+
+    @swagger_auto_schema(request_body=schema)
     def post(self, request, format=None):
         '''
         post info about a new user
@@ -82,9 +88,7 @@ class UserApi(APIView):
                     status=status.HTTP_201_CREATED,
                 )
         except:
-            return Response(
-                {'Bad Request try again, the user may already exist'},
-                status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CalculateCost(APIView):
@@ -232,9 +236,20 @@ class Bookers(APIView):
 
 
 class UserBookedCars(APIView):
+    '''
+    return a list of cars booked by the user
+    '''
+
     def get(self, request, pk=None, format=None):
         userId = pk
         booked_cars = BookedCars.objects.filter(userid=userId)
+        users = NewUser.objects.filter(userMobile=userId)
+
+        if len(users) == 0:
+            return Response(
+                {'User not Found': userId},
+                status=status.HTTP_404_NOT_FOUND)
+
         serializer = BookCarSerializer(booked_cars, many=True)
 
         json_data = JSONRenderer().render(serializer.data)
