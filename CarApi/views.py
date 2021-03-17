@@ -7,6 +7,7 @@ from rest_framework import status, permissions
 from rest_framework.response import Response
 from datetime import datetime
 from dateutil import parser
+from rest_framework.renderers import JSONRenderer
 
 
 class CarApi(APIView):
@@ -188,6 +189,17 @@ class BookCar(APIView):
                     return Response(serializer.data)
             except:
                 return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class Bookers(APIView):
+
+    def get(self, request, pk=None, format=None):
+        carId = str(pk)
+        booked_cars = BookedCars.objects.filter(carLicenseNumber=carId)
+        serializer = BookCarSerializer(booked_cars, many=True)
+
+        json_data = JSONRenderer().render(serializer.data)
+        return HttpResponse(json_data, content_type="application/json")
 
 
 '''
