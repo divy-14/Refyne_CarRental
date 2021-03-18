@@ -3,7 +3,6 @@
   <b> Refyne Car Rental </b> is an API to manage Car Rental Services.
 </p>
 <br>
-<br>
 <p align="center">
 <img src="https://github.com/divy-14/Refyne_CarRental/blob/main/DataBaseLayout.png" alt="demo Xmeme" width="800px" height="500px">
 </p>
