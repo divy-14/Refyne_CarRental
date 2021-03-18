@@ -46,7 +46,6 @@
 </ul>
 </li>
 
-<ul>
 <li> Curl Request to to add a vehicle and see all the added vehicles
 <br>
 <br>
