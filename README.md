@@ -99,6 +99,12 @@
 </ul>
 
 <br>
+
+<h3>Swagger</h3>
+If you are not a fan of working with Terminals and still want to try out the API. I got you covered 😎 the API is Swagger documented what is that you ask? <br>
+Swagger is a set of rules (in other words, a specification) for a format describing REST APIs. The format is both machine-readable and human-readable. As a result, it can be used to share documentation among product managers, testers and developers <br>
+Now you can visit <a href="https://refyne-car-rental-api.herokuapp.com/">Refyne Car Rental API</a> and you will be provided with an easy to use and simple interface to test out the API.
+
 <h1 align="center">Found a Bug</h1>
 <p> 
 If you find any bug or have any feature request, feel free to raise an issue or contact me on : <a href="mailto:divymohanrai@gmail.com"> Divy Mohan Rai </a>, 
