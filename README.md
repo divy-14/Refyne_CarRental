@@ -66,10 +66,33 @@
 </ul>
 </li>
 
-
-
+<li> Given a user a return list of all the cars he has booked along with their price and durations
+<br>
+<br>
 <ul>
+  <li><b>GET request -> CARS 👇</b> <p> curl -i --location --request GET http://localhost:8000/user/bookings/{mobileNumber} </p></li> 
+</ul>
+</li>
 
+<li> Given a Car return a list of users who have booked the car along with their durations
+<br>
+<br>
+<ul>
+  <li><b>GET request -> CARS 👇</b> <p> curl -i --location --request GET  http://localhost:8000/car/bookings/{carNumberPlate} </p></li> 
+</ul>
+</li>
+
+<li> To book a car for certain durations.
+<br>
+<br>
+<ul>
+  <li><b>POST request -> CARS 👇</b> <p> curl --location --request POST http://localhost:8000/car/book/ --header Content-Type:application/json --data-raw "{\"carLicenseNumber\":\"k1h3u13h1\",  \"fromDate\":\"2018-11-10 10:55:31\", \"toDate\":\"2018-11-10 10:55:31\", \"userid\":\"9810159145\"}" </p></li> 
+</ul>
+</li>
+
+</ul>
+
+hello
 
 
 
