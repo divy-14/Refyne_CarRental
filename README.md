@@ -36,17 +36,24 @@
 <h3>Using the API (curl commands):</h3>
 
 <ul>
-<li> API to Add a user and Add a car in the system. 
+<li> Curl Request to to add a user and see all the added users
+<br>
+<br>
+<ul>  
+  <li><b>GET request 👇</b> <p>curl -i --location --request GET https://refyne-car-rental-api.herokuapp.com/user </p></li>
+  
+  <li><b>POST request 👇</b> <p>curl --location --request POST https://refyne-car-rental-api.herokuapp.com/user --header Content-Type:application/json --data-raw "{\"userName\":\"Jhonny\",  \"userMobile\":\"9876767890\"}"</p> </li>
+</ul>
+</li>
+
+<ul>
+<li> Curl Request to to add a vehicle and see all the added vehicles
 <br>
 <br>
 <ul>
   <li><b>GET request 👇</b> <p> curl -i --location --request GET  https://refyne-car-rental-api.herokuapp.com/cars </p></li>
 
   <li><b>POST request 👇</b> <p>curl --location --request POST https://refyne-car-rental-api.herokuapp.com/cars --header Content-Type:application/json --data-raw "{\"carLicenseNumber\":\"jefefuef21\",  \"Manufacturer\":\"HYUndai\",  \"Model\":\"MP\" , \"base_price\":\"189000\", \"pph\":\"1000\", \"security_deposit\":\"2000\"}"</p> </li>
-  
-  <li><b>GET request 👇</b> <p>curl -i --location --request GET https://refyne-car-rental-api.herokuapp.com/user </p></li>
-  
-  <li><b>POST request 👇</b> <p>curl --location --request POST https://refyne-car-rental-api.herokuapp.com/user --header Content-Type:application/json --data-raw "{\"userName\":\"Jhonny\",  \"userMobile\":\"9876767890\"}"</p> </li>
 </ul>
 </li>
 
