@@ -44,7 +44,7 @@
 
   <li><b>POST request 👇</b> <p>curl --location --request POST https://refyne-car-rental-api.herokuapp.com/cars --header Content-Type:application/json --data-raw "{\"carLicenseNumber\":\"jefefuef21\",  \"Manufacturer\":\"HYUndai\",  \"Model\":\"MP\" , \"base_price\":\"189000\", \"pph\":\"1000\", \"security_deposit\":\"2000\"}"</p> </li>
   
-  <li><b>GET request -> USERS 👇</b> <p>curl -i --location --request GET https://refyne-car-rental-api.herokuapp.com/user </p></li>
+  <li><b>GET request 👇</b> <p>curl -i --location --request GET https://refyne-car-rental-api.herokuapp.com/user </p></li>
   
   <li><b>POST request 👇</b> <p>curl --location --request POST https://refyne-car-rental-api.herokuapp.com/user --header Content-Type:application/json --data-raw "{\"userName\":\"Jhonny\",  \"userMobile\":\"9876767890\"}"</p> </li>
 </ul>
@@ -54,7 +54,7 @@
 <br>
 <br>
 <ul>
-  <li><b>POST request 👇</b> <p> curl -i --location --request POST http://localhost:8000/search-cars/ --header Content-Type:application/json --data-raw "{\"fromDate\":\"2021-03-30 10:55:31\", \"toDate\":\"2021-03-31 10:55:31\"}"</p></li> 
+  <li><b>POST request 👇</b> <p> curl -i --location --request POST https://refyne-car-rental-api.herokuapp.com/search-cars --header Content-Type:application/json --data-raw "{\"fromDate\":\"2021-03-30 10:55:31\", \"toDate\":\"2021-03-31 10:55:31\"}"</p></li> 
 </ul>
 </li>
 
@@ -92,6 +92,14 @@
 
 </ul>
 
+<br>
+<h1 align="center">Found a Bug</h1>
+<p> 
+If you find any bug or have any feature request, feel free to raise an issue or contact me on : <a href="mailto:divymohanrai@gmail.com"> Divy Mohan Rai </a>, 
+If you want to contribute to this project please create a pull request.
+</p>
+
+#### If you liked ♥ this project, please hit that **STAR** button.
 
 
 
