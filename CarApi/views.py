@@ -254,8 +254,8 @@ class Bookers(APIView):
     get list of users who have booked a given car
     '''
 
-    def get(self, request, pk=None, format=None):
-        carId = str(pk)
+    def get(self, request, carLicenseNumber=None, format=None):
+        carId = str(carLicenseNumber)
         try:
             booked_cars = BookedCars.objects.filter(carLicenseNumber=carId)
             cars = Car.objects.filter(carLicenseNumber=carId)
@@ -282,8 +282,8 @@ class UserBookedCars(APIView):
     return a list of cars booked by the user
     '''
 
-    def get(self, request, pk=None, format=None):
-        userId = pk
+    def get(self, request, mobileNumber=None, format=None):
+        userId = mobileNumber
         booked_cars = BookedCars.objects.filter(userid=userId)
         users = NewUser.objects.filter(userMobile=userId)
 
