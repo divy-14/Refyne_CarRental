@@ -44,19 +44,31 @@
 
   <li><b>POST request -> CARS 👇</b> <p>curl --location --request POST http://localhost:8000/cars/ --header Content-Type:application/json --data-raw "{\"carLicenseNumber\":\"jefefuef21\",  \"Manufacturer\":\"HYUndai\",  \"Model\":\"MP\" , \"base_price\":\"189000\", \"pph\":\"1000\", \"security_deposit\":\"2000\"}"</p> </li>
   
-  <li><b>GET request -> CARS 👇</b> <p>curl -i --location --request GET  http://localhost:8000/user </p></li>
+  <li><b>GET request -> USERS 👇</b> <p>curl -i --location --request GET  http://localhost:8000/user </p></li>
   
   <li><b>POST request -> USERS 👇</b> <p>curl --location --request POST http://localhost:8000/user/ --header Content-Type:application/json --data-raw "{\"userName\":\"Jhonny\",  \"userMobile\":\"9876767890\"}"</p> </li>
- 
+</ul>
 </li>
+
+<li> Given a time range, figure out which cars are available for that duration
+<br>
+<br>
 <ul>
+  <li><b>GET request -> CARS 👇</b> <p> curl -i --location --request GET http://localhost:8000/search-cars/ --header Content-Type:application/json --data-raw "{\"fromDate\":\"2021-03-30 10:55:31\", \"toDate\":\"2021-03-31 10:55:31\"}"</p></li> 
+</ul>
+</li>
+
+<li> Given a time range calculate pricing for that car.
+<br>
+<br>
+<ul>
+  <li><b>POST request -> CARS 👇</b> <p> curl --location --request POST http://localhost:8000/calculate-price/ --header Content-Type:application/json --data-raw "{\"carLicenseNumber\":\"jefefuef21\",  \"fromDate\":\"78\", \"toDate\":\"80\"}"</p></li> 
+</ul>
+</li>
 
 
 
-
-
-
-
+<ul>
 
 
 
